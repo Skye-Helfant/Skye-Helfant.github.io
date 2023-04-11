@@ -1,0 +1,130 @@
+{% block main %}
+<div class="container" style="padding: 70px;">
+    <div class="collapse" id="entry_{{ i }}">
+        <table class="table table-dark table-hover mx-auto">
+            <tbody>
+                <tr>
+                    <td><strong>Display Name:</strong></td>
+                    <td style="color: #00FF41;">{{ entry.display_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Internal Name:</strong></td>
+                    <td style="color: #00FF41;">{{ entry.internal_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>IP Address:</strong></td>
+                    <td style="color: #00FF41;">{{ entry.ip }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Last Backup:</strong></td>
+                    <td style="color: #00FF41;">{{ timestamp_to_string(entry.last_backup) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Last Uptime:</strong></td>
+                    <td style="color: #00FF41;">{{ timestamp_to_string(entry.last_uptime) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Date Added:</strong></td>
+                    <td style="color: #00FF41;">{{ timestamp_to_string(entry.date_added) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Date Updated:</strong></td>
+                    <td style="color: #00FF41;">{{ timestamp_to_string(entry.date_updated) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#drives_{{ i }}" aria-expanded="false" aria-controls="drives_{{ i }}" style="font-size: 16px;">Show/Hide Drives</button>
+                        <div class="collapse" id="drives_{{ i }}">
+                            <table class="table table-dark table-hover mx-auto">
+                                <tbody>
+                                    {% for information in entry.drives %}
+                                    <tr>
+                                        <td class="special-td"><strong>Date Added:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ timestamp_to_string(information.date_added) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Date Updated:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ timestamp_to_string(information.date_updated) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Directory:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ information.directory }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Disk Max Usage:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ information.disk_max_usage }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% set history_data = entry.drives[0].history %}
+                                    {% for history in history_data %}
+                                        <tr>
+                                            <td class="special-td-v2"><strong>Date Added:</strong></td>
+                                            <td class="special-td-v2" style="color: #00FF41;">{{ timestamp_to_string(history.date_added) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="special-td-v2"><strong>Date Updated:</strong></td>
+                                            <td class="special-td-v2" style="color: #00FF41;">{{ timestamp_to_string(history.date_updated) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="special-td-v2"><strong>Disk Space Unit:</strong></td>
+                                            <td class="special-td-v2" style="color: #00FF41;">{{ history.disk_space_unit }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="special-td-v2"><strong>Free Disk Space:</strong></td>
+                                            <td class="special-td-v2" style="color: #00FF41;">{{ history.free_disk_space }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="special-td-v2"><strong>Total Disk Space:</strong></td>
+                                            <td class="special-td-v2" style="color: #00FF41;">{{ history.total_disk_space }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#services_{{ i }}" aria-expanded="false" aria-controls="services_{{ i }}">Show/Hide Services</button>
+                        <div class="collapse" id="services_{{ i }}">
+                            <table class="table table-dark table-hover mx-auto">
+                                <tbody>
+                                    {% for service in entry.services %}
+                                    <tr>
+                                        <td class="special-td"><strong>Date Added:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ timestamp_to_string(service.date_added) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Date Updated:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ timestamp_to_string(service.date_updated) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Display Name:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ service.display_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Name:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ service.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="special-td"><strong>Version:</strong></td>
+                                        <td class="special-td" style="color: #00FF41;">{{ service.version }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler mx-auto w-50" type="button" data-bs-toggle="collapse" data-bs-target="#entry_{{ i }}" aria-controls="entry_{{ i }}" aria-expanded="false" aria-label="Toggle navigation" style="border: none; color: #cccccc; font-weight: bold;">
+            {{ entry.display_name }}
+            </button>
+        </div>
+    </nav>
+</div>
+{% endblock %}

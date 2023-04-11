@@ -1,0 +1,9 @@
+display_name
+internal_name
+ip
+last_backup
+last_uptime
+date_added
+date_updated
+drives
+services
